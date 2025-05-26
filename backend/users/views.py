@@ -3,7 +3,6 @@ from djoser.views import UserViewSet
 from rest_framework import generics, status, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-
 from users.models import Subscription, User
 from users.serializers import AvatarSerializer, SubscriptionSerializer
 

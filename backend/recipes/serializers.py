@@ -1,14 +1,10 @@
-from rest_framework import serializers
-from rest_framework.exceptions import NotAuthenticated
-
 from core.models import Tag
-from core.serializers import (
-    Base64ImageField,
-    IngredientInRecipeSerializer,
-    TagSerializer,
-)
+from core.serializers import (Base64ImageField, IngredientInRecipeSerializer,
+                              TagSerializer)
 from recipes.mixins import ImageMixin
 from recipes.models import Favorite, Recipe, RecipeIngredient, ShoppingCart
+from rest_framework import serializers
+from rest_framework.exceptions import NotAuthenticated
 from users.serializers import UserSerializer
 
 

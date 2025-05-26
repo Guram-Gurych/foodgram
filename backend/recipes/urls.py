@@ -1,7 +1,6 @@
 from django.urls import include, path
-from rest_framework import routers
-
 from recipes.views import RecipeViewSet, favorite_view, shopping_cart_view
+from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register("", RecipeViewSet, basename="recipes")

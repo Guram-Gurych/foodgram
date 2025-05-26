@@ -1,7 +1,6 @@
+from core.serializers import Base64ImageField, RecipeSubscriptionSerializer
 from djoser.serializers import UserCreateSerializer
 from rest_framework import serializers
-
-from core.serializers import Base64ImageField, RecipeSubscriptionSerializer
 from users.models import Subscription, User
 
 
@@ -55,7 +54,8 @@ class SubscriptionSerializer(serializers.ModelSerializer):
         user = self.context.get("request").user
         if user.is_anonymous:
             return False
-        return Subscription.objects.filter(user=user, subscription=obj).exists()
+        return Subscription.objects.filter(
+            user=user, subscription=obj).exists()
 
 
 class UserCreateSerializer(UserCreateSerializer):

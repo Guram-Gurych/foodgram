@@ -1,8 +1,7 @@
 import base64
 
-from django.core.files.base import ContentFile
-
 from core.models import Ingredient, Tag
+from django.core.files.base import ContentFile
 from recipes.models import Recipe
 from rest_framework import serializers
 
