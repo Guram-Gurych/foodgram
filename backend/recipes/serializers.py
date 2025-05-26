@@ -72,7 +72,7 @@ class RecipeWriteSerializer(serializers.ModelSerializer, ImageMixin):
         if ingredients is not None:
             if not ingredients:
                 raise serializers.ValidationError(
-                    {"ingredients": "Список ингредиентов не может быть пустым."}
+                    {"ingredients": "The list of ingredients cannot be empty."}
                 )
 
             vaild_ingredients = {}
@@ -80,7 +80,7 @@ class RecipeWriteSerializer(serializers.ModelSerializer, ImageMixin):
                 ingredient = item["id"]
                 if ingredient in vaild_ingredients:
                     raise serializers.ValidationError(
-                        {"ingredients": "Ингредиенты не должны повторяться."}
+                        {"ingredients": "Ingredients should not be repeated."}
                     )
                 vaild_ingredients[ingredient] = True
 
@@ -88,14 +88,14 @@ class RecipeWriteSerializer(serializers.ModelSerializer, ImageMixin):
         if tags is not None:
             if not tags:
                 raise serializers.ValidationError(
-                    {"tags": "Список тегов не может быть пустым."}
+                    {"tags": "The list of tags cannot be empty."}
                 )
 
             valid_tags = {}
             for tag in tags:
                 if tag in valid_tags:
                     raise serializers.ValidationError(
-                        {"tags": "Теги не должны повторяться."}
+                        {"tags": "Tags should not be repeated."}
                     )
                 valid_tags[tag] = True
 
