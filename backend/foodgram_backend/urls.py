@@ -21,7 +21,11 @@ if settings.DEBUG:
             "static/<path:path>",
             serve,
             {
-                "document_root": os.path.join(settings.BASE_DIR, "backend", "static"),
+                "document_root": os.path.join(
+                    settings.BASE_DIR,
+                    "backend",
+                    "static"
+                ),
             },
         ),
     ]

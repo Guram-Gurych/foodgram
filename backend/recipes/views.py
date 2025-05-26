@@ -2,6 +2,7 @@ from django.db.models import Sum
 from django.http import HttpResponse
 from django.urls import reverse
 from django_filters.rest_framework import DjangoFilterBackend
+
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -38,20 +39,27 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         return self.serializer_classes.get(self.action, RecipeReadSerializer)
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request, *_, **__):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
-        return self.build_response(serializer.instance, status.HTTP_201_CREATED)
+        return self.build_response(
+            serializer.instance, status.HTTP_201_CREATED)
 
     def partial_update(self, request, *_, **__):
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer = self.get_serializer(
+            instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         return self.build_response(serializer.instance, status.HTTP_200_OK)
 
-    @action(detail=True, methods=["get"], url_path="get-link", permission_classes=[AllowAny])
+    @action(
+        detail=True,
+        methods=["get"],
+        url_path="get-link",
+        permission_classes=[AllowAny],
+    )
     def get_link(self, request, pk):
         path = reverse("recipes-detail", args=[pk])
         return Response({"short-link": request.build_absolute_uri(path)})
@@ -64,20 +72,23 @@ class RecipeViewSet(viewsets.ModelViewSet):
     )
     def download_shopping_cart(self, request):
         ingredients = (
-            RecipeIngredient.objects.filter(recipe__shopping_cart__user=request.user)
+            RecipeIngredient.objects.filter(
+                recipe__shopping_cart__user=request.user)
             .values("ingredients__name", "ingredients__measurement_unit")
             .annotate(total_amount=Sum("amount"))
         )
 
         text = [
-            f"{ingredient['ingredients__name']}: {ingredient['total_amount']}{ingredient['ingredients__measurement_unit']}"
+            f"{ingredient['ingredients__name']}: {ingredient['total_amount']}{ingredient['ingredients__measurement_unit']}"    # noqa:E501
             for ingredient in ingredients
         ]
 
         text_result = "\n".join(text)
 
         response = HttpResponse(text_result, content_type="text/plain")
-        response["Content-Disposition"] = 'attachment; filename="shopping_cart.txt"'
+        response[
+            "Content-Disposition"
+        ] = 'attachment; filename="shopping_cart.txt"'
 
         return response
 

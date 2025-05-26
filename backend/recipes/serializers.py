@@ -2,8 +2,11 @@ from rest_framework import serializers
 from rest_framework.exceptions import NotAuthenticated
 
 from core.models import Tag
-from core.serializers import (Base64ImageField, IngredientInRecipeSerializer,
-                              TagSerializer)
+from core.serializers import (
+    Base64ImageField,
+    IngredientInRecipeSerializer,
+    TagSerializer,
+)
 from recipes.mixins import ImageMixin
 from recipes.models import Favorite, Recipe, RecipeIngredient, ShoppingCart
 from users.serializers import UserSerializer
@@ -59,46 +62,51 @@ class RecipeWriteSerializer(serializers.ModelSerializer, ImageMixin):
         )
 
     def validate(self, data):
-        if "ingredients" not in self.initial_data or "tags" not in self.initial_data:
+        if (
+            "ingredients" not in self.initial_data
+            or "tags" not in self.initial_data
+        ):
             raise serializers.ValidationError({
-                "ingredients": "This field is required for partial update."
+                "ingredients": (
+                    "This field is required for partial update."
+                )
             })
-        
+
         ingredients = data.get("ingredients")
         if ingredients is not None:
             if not ingredients:
-                raise serializers.ValidationError({
-                    "ingredients": "Список ингредиентов не может быть пустым."
-                })
+                raise serializers.ValidationError(
+                    {"ingredients": "Список ингредиентов не может быть пустым."}
+                )
 
             vaild_ingredients = {}
             for item in ingredients:
                 ingredient = item["id"]
                 if ingredient in vaild_ingredients:
-                    raise serializers.ValidationError({
-                        "ingredients": "Ингредиенты не должны повторяться."
-                    })
+                    raise serializers.ValidationError(
+                        {"ingredients": "Ингредиенты не должны повторяться."}
+                    )
                 vaild_ingredients[ingredient] = True
 
         tags = data.get("tags")
         if tags is not None:
             if not tags:
-                raise serializers.ValidationError({
-                    "tags": "Список тегов не может быть пустым."
-                })
+                raise serializers.ValidationError(
+                    {"tags": "Список тегов не может быть пустым."}
+                )
 
             valid_tags = {}
             for tag in tags:
                 if tag in valid_tags:
-                    raise serializers.ValidationError({
-                        "tags": "Теги не должны повторяться."
-                    })
+                    raise serializers.ValidationError(
+                        {"tags": "Теги не должны повторяться."}
+                    )
                 valid_tags[tag] = True
 
         return data
 
     def create(self, validated_data):
-        request = self.context.get('request')
+        request = self.context.get("request")
         ingredients = validated_data.pop("ingredients")
         tags = validated_data.pop("tags")
         validated_data["author"] = self.context["request"].user
@@ -110,9 +118,7 @@ class RecipeWriteSerializer(serializers.ModelSerializer, ImageMixin):
             self._save_ingredients(recipe, ingredients)
 
             return recipe
-        raise NotAuthenticated(
-            "Authentication credentials were not provided."
-        )
+        raise NotAuthenticated("Authentication credentials were not provided.")
 
     def update(self, instance, validated_data):
         ingredients = validated_data.pop("ingredients", None)
