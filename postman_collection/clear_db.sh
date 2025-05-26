@@ -17,7 +17,7 @@ fi
 
 echo "from django.contrib.auth import get_user_model; User = get_user_model(); \
      usernames_list = ['vasya.ivanov', 'second-user', 'third-user-username', 'NoEmail', 'NoFirstName', 'NoLastName', 'NoPassword', 'TooLongEmail', \
-     'the-username-that-is-150-characters-long-and-should-not-pass-validation-if-the-serializer-is-configured-correctly-otherwise-the-current-test-will-fail-', \
+     'the-username-that-is-150-characters-long-and-should-not-pass-clear_db.svalidation-if-the-serializer-is-configured-correctly-otherwise-the-current-test-will-fail-', \
      'TooLongFirstName', 'TooLongLastName', 'InvalidU$ername', 'EmailInUse']; \
      delete_num, _ = User.objects.filter(username__in=usernames_list).delete(); \
      exit(1) if not delete_num else exit(0);" | $python manage.py shell

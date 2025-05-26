@@ -13,7 +13,7 @@ services:
   
   backend:
     container_name: backend
-    build: ../backend/
+    image: gurych/foodgram_backend
     env_file: .env
     volumes:
       - backend_static:/app/backend_static
@@ -23,16 +23,14 @@ services:
 
   frontend:
     container_name: frontend
-    build: ../frontend/
+    image: gurych/foodgram_frontend
     command: sh -c "cp -r /app/build/* /frontend_static/"
     volumes:
       - frontend_static:/frontend_static
 
   nginx:
     container_name: foodgram-proxy
-    build:
-      context: ..
-      dockerfile: nginx/Dockerfile
+    image: gurych/foodgram_nginx
     ports:
       - "80:80"
     volumes:

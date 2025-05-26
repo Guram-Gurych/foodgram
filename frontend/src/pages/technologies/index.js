@@ -1,43 +1,54 @@
-import { Title, Container, Main } from '../../components'
+import { Container, Main } from '../../components'
 import styles from './styles.module.css'
 import MetaTags from 'react-meta-tags'
 
 const Technologies = () => {
-  
-  return <Main>
-    <MetaTags>
-      <title>О проекте</title>
-      <meta name="description" content="Фудграм - Технологии" />
-      <meta property="og:title" content="О проекте" />
-    </MetaTags>
-    
-    <Container>
-      <h1 className={styles.title}>Технологии</h1>
-      <div className={styles.content}>
-        <div>
-          <h2 className={styles.subtitle}>Технологии, которые применены в этом проекте:</h2>
-          <div className={styles.text}>
-            <ul className={styles.textItem}>
+  return (
+    <Main>
+      <MetaTags>
+        <title>Технологии</title>
+        <meta name="description" content="Фудграм - Технологии" />
+        <meta property="og:title" content="Технологии" />
+      </MetaTags>
+
+      <Container>
+        <div className={styles.content}>
+          <div>
+            <h1 className={styles.title}>Технологии</h1>
+            <h2 className={styles.subtitle}>Что под капотом Foodgram?</h2>
+
+            <p className={`${styles.text} ${styles.textItem}`}>
+              Проект построен на современных веб-технологиях, обеспечивающих стабильную работу, масштабируемость и удобство использования.
+            </p>
+
+            <ul className={styles.text}>
               <li className={styles.textItem}>
-                Python
+                <strong>Backend:</strong> Python, Django 3.2, Django REST Framework
               </li>
               <li className={styles.textItem}>
-                Django
+                <strong>Авторизация:</strong> Djoser
               </li>
               <li className={styles.textItem}>
-                Django REST Framework
+                <strong>База данных:</strong> PostgreSQL
               </li>
               <li className={styles.textItem}>
-                Djoser
+                <strong>Контейнеризация:</strong> Docker
+              </li>
+              <li className={styles.textItem}>
+                <strong>Frontend:</strong> React
+              </li>
+              <li className={styles.textItem}>
+                <strong>Веб-сервер:</strong> Gunicorn + Nginx
+              </li>
+              <li className={styles.textItem}>
+                <strong>CI/CD:</strong> GitHub Actions
               </li>
             </ul>
           </div>
         </div>
-      </div>
-      
-    </Container>
-  </Main>
+      </Container>
+    </Main>
+  )
 }
 
 export default Technologies
-
