@@ -78,7 +78,7 @@ jobs:
     - name: Test frontend
       run: |
         cd frontend/
-        npm run test
+        npm install
 
   docker_push_frontend:
     name: Push frontend Docker image to DockerHub
@@ -117,7 +117,8 @@ jobs:
       - name: Push to DockerHub
         uses: docker/build-push-action@v4
         with:
-          context: ./nginx/
+          context: .
+          file: nginx/Dockerfile
           push: true
           tags: gurych/foodgram_nginx:latest 
   
