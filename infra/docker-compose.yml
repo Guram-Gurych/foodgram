@@ -15,8 +15,6 @@ services:
     container_name: backend
     build: ../backend/
     env_file: .env
-    ports:
-      - "8080:8000"
     volumes:
       - backend_static:/app/backend_static
       - media:/app/media
