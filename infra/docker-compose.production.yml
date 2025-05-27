@@ -10,6 +10,8 @@ services:
     env_file: .env
     volumes:
       - pg_data:/var/lib/postgresql/data
+    networks:
+      - foodgram_network
   
   backend:
     container_name: backend
@@ -18,6 +20,8 @@ services:
     volumes:
       - backend_static:/app/backend_static
       - media:/app/media
+    networks:
+      - foodgram_network
     depends_on:
       - db
 
@@ -27,6 +31,8 @@ services:
     command: sh -c "cp -r /app/build/* /frontend_static/"
     volumes:
       - frontend_static:/frontend_static
+    networks:
+      - foodgram_network
 
   nginx:
     container_name: foodgram-proxy
@@ -37,5 +43,10 @@ services:
       - backend_static:/staticfiles/admin/
       - frontend_static:/staticfiles/
       - media:/media
+    networks:
+      - foodgram_network
     depends_on:
       - backend
+
+networks:
+  foodgram_network:
