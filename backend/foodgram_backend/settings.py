@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     "recipes.apps.RecipesConfig",
     "users.apps.UsersConfig",
     "core.apps.CoreConfig",
-    "api.apps.CoreConfig",
+    "api.apps.ApiConfig",
 ]
 
 MIDDLEWARE = [
@@ -125,14 +125,14 @@ REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": [
         "django_filters.rest_framework.DjangoFilterBackend",
     ],
-    "DEFAULT_PAGINATION_CLASS": "core.pagination.PageNumberLimitPagination",
+    "DEFAULT_PAGINATION_CLASS": "api.pagination.PageNumberLimitPagination",
 }
 
 DJOSER = {
     "LOGIN_FIELD": "email",
     "SERIALIZERS": {
-        "user_create": "users.serializers.UserCreateSerializer",
-        "current_user": "users.serializers.UserSerializer",
-        "user": "users.serializers.UserSerializer",
+        "user_create": "api.serializers.UserCreateSerializer",
+        "current_user": "api.serializers.UserSerializer",
+        "user": "api.serializers.UserSerializer",
     },
 }
