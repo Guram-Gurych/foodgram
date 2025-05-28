@@ -164,14 +164,14 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
 class FavoriteViewSet(BaseViewSet):
     model = Favorite
-    error_add = "Рецепт уже в избранном."
-    error_delete = "Рецепта нет в избранном."
+    error_add = "The recipe is already in favorites."
+    error_delete = "The recipe is not in favorites."
 
 
 class ShoppingCartViewSet(BaseViewSet):
     model = ShoppingCart
-    error_add = "Рецепт уже в списке покупок."
-    error_delete = "Рецепта нет в списке покупок."
+    error_add = "The recipe is already on the shopping list."
+    error_delete = "The recipe is not on the shopping list."
 
 
 favorite_view = FavoriteViewSet.as_view(
