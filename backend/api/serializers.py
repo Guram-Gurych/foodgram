@@ -6,9 +6,9 @@ from rest_framework import serializers
 from rest_framework.exceptions import NotAuthenticated
 
 from api.mixins import ImageMixin
-from core.constants import MIN_VALUE_MODEL, MAX_VALUE_MODEL
+from core.constants import MAX_VALUE_MODEL, MIN_VALUE_MODEL
 from core.models import Ingredient, Tag
-from recipes.models import Favorite, Recipe, RecipeIngredient, ShoppingCart
+from recipes.models import Recipe, RecipeIngredient
 from users.models import Subscription, User
 
 

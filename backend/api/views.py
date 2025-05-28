@@ -11,11 +11,15 @@ from rest_framework.response import Response
 
 from api.filters import IngredientNameFilter, RecipeFilter
 from api.permissions import IsAuthorOrReadOnly
-from api.serializers import (AvatarSerializer, IngredientSerializer,
-                             RecipeReadSerializer,
-                             RecipeSubscriptionSerializer,
-                             RecipeWriteSerializer, SubscriptionSerializer,
-                             TagSerializer)
+from api.serializers import (
+    AvatarSerializer,
+    IngredientSerializer,
+    RecipeReadSerializer,
+    RecipeSubscriptionSerializer,
+    RecipeWriteSerializer,
+    SubscriptionSerializer,
+    TagSerializer,
+)
 from core.models import Ingredient, Tag
 from recipes.models import Favorite, Recipe, RecipeIngredient, ShoppingCart
 from users.models import Subscription, User
