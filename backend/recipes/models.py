@@ -1,6 +1,7 @@
-from core.models import Ingredient, Tag
 from django.contrib.auth import get_user_model
 from django.db import models
+
+from core.models import Ingredient, Tag
 
 User = get_user_model()
 
@@ -26,17 +27,17 @@ class Recipe(models.Model):
     )
     tags = models.ManyToManyField(
         Tag, related_name="recipes", verbose_name="Тег")
-    cooking_time = models.PositiveIntegerField(
+    cooking_time = models.PositiveSmallIntegerField(
         verbose_name="Время приготовления"
     )
 
     class Meta:
-        default_related_name = "recipes"
+        ordering = ["name"]
         verbose_name = "Рецепт"
         verbose_name_plural = "Рецепты"
 
     def __str__(self):
-        return self.name
+        return f"{self.name} (автор: {self.author})"
 
 
 class RecipeIngredient(models.Model):
@@ -49,36 +50,58 @@ class RecipeIngredient(models.Model):
     ingredients = models.ForeignKey(
         Ingredient, on_delete=models.CASCADE, verbose_name="Ингредиент"
     )
-    amount = models.PositiveIntegerField(verbose_name="Количество")
+    amount = models.PositiveSmallIntegerField(verbose_name="Количество")
 
     class Meta:
+        ordering = ["recipe__name"]
         verbose_name = "Ингредиент в рецепте"
         verbose_name_plural = "Ингредиенты в рецепте"
+
+    def __str__(self):
+        return f"{self.ingredients.name} в рецепте {self.recipe.name}"
 
 
 class Favorite(models.Model):
     recipe = models.ForeignKey(
-        Recipe, on_delete=models.CASCADE, verbose_name="Рецепт"
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name="favorited_by",
+        verbose_name="Рецепт",
     )
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name="Пользователь"
+        User,
+        on_delete=models.CASCADE,
+        related_name="favorites",
+        verbose_name="Пользователь",
     )
 
     class Meta:
-        default_related_name = "favorites"
+        ordering = ["recipe__name"]
         verbose_name = "Избранное"
         verbose_name_plural = "Избранные"
+
+    def __str__(self):
+        return f"Избранное: {self.recipe.name} у {self.user}"
 
 
 class ShoppingCart(models.Model):
     recipe = models.ForeignKey(
-        Recipe, on_delete=models.CASCADE, verbose_name="Рецепт"
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name="in_shopping_carts",
+        verbose_name="Рецепт",
     )
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name="Пользователь"
+        User,
+        on_delete=models.CASCADE,
+        related_name="shopping_cart_items",
+        verbose_name="Пользователь"
     )
 
     class Meta:
-        default_related_name = "shopping_cart"
+        ordering = ["recipe__name"]
         verbose_name = "Карта покупок"
         verbose_name_plural = "Карты покупок"
+
+    def __str__(self):
+        return f"{self.recipe.name} в списке у {self.user}"

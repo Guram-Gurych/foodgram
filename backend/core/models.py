@@ -10,6 +10,7 @@ class Tag(models.Model):
     )
 
     class Meta:
+        ordering = ["name"]
         verbose_name = "Тег"
         verbose_name_plural = "Теги"
 
@@ -33,6 +34,7 @@ class Ingredient(models.Model):
     measurement_unit = models.CharField(max_length=20, choices=UNITS)
 
     class Meta:
+        ordering = ["name"]
         verbose_name = "Ингредиент"
         verbose_name_plural = "Ингредиенты"
 

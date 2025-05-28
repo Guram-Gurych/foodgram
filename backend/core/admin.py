@@ -1,5 +1,6 @@
-from core.models import Ingredient, Tag
 from django.contrib import admin
+
+from core.models import Ingredient, Tag
 
 admin.site.empty_value_display = "Не задано"
 

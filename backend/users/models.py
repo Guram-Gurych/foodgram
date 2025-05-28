@@ -3,7 +3,7 @@ import textwrap
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-TITLE_STR_MAX_LENGTH = 30
+from core.constants import TITLE_STR_MAX_LENGTH
 
 
 class User(AbstractUser):
@@ -16,8 +16,12 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
 
     class Meta(AbstractUser.Meta):
+        ordering = ["username"]
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
+
+    def __str__(self):
+        return self.username
 
 
 class Subscription(models.Model):
@@ -35,6 +39,7 @@ class Subscription(models.Model):
     )
 
     class Meta:
+        ordering = ["user__username"]
         verbose_name = "Подписка"
         verbose_name_plural = "Подписки"
 
